@@ -1,5 +1,27 @@
 // Use this file as a starting point for your project's .eslintrc.
 // Copy this file, and add rule overrides as needed.
 {
-  "extends": "airbnb"
+  "extends": "airbnb",
+  "plugins": [
+    "sort-class-members"
+  ],
+  "rules": {
+    "object-shorthand": "off",
+    "max-len": ["error", 120, 2, {
+      "ignoreUrls": true,
+      "ignoreComments": false,
+      "ignoreRegExpLiterals": true,
+      "ignoreStrings": true,
+      "ignoreTemplateLiterals": true
+    }],
+    "sort-class-members/sort-class-members": [2, {
+      "order": [
+        "[static-properties]",
+        "[static-methods]",
+        "[properties]",
+        "constructor",
+        "[methods]"
+      ]
+    }]
+  }
 }
