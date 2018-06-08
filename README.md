@@ -1,22 +1,38 @@
-# Airbnb JavaScript Style Guide() {
+# Oozou JavaScript Style Guide() { // forked from [Airbnb's javascript guide](https://github.com/airbnb/javascript.git)
+
+> Most parts of the guide remain the same but we have just little differences to match our own style.
+
+For changes/additions list, see:
+- [3.3](#es6-object-shorthand)
+- [4.5](#arrays-mapping)
+- [9.7](#classes--members-order)
+- [11.2](#generators--yep)
+- [19.12](#whitespace--max-len)
 
 *A mostly reasonable approach to JavaScript*
 
 > **Note**: this guide assumes you are using [Babel](https://babeljs.io), and requires that you use [babel-preset-airbnb](https://npmjs.com/babel-preset-airbnb) or the equivalent. It also assumes you are installing shims/polyfills in your app, with [airbnb-browser-shims](https://npmjs.com/airbnb-browser-shims) or the equivalent.
 
-[![Downloads](https://img.shields.io/npm/dm/eslint-config-airbnb.svg)](https://www.npmjs.com/package/eslint-config-airbnb)
-[![Downloads](https://img.shields.io/npm/dm/eslint-config-airbnb-base.svg)](https://www.npmjs.com/package/eslint-config-airbnb-base)
-[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/airbnb/javascript?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+## .eslintrc
 
-This guide is available in other languages too. See [Translation](#translation)
+The file [.eslintrc](linters/.eslintrc) is already configured to reflect on the edited guideline. To get started: 
 
-Other Style Guides
+- If you already have npm 5+ version then this command should do all the jobs:
+  ```bash
+  npx install-peerdeps --dev eslint-config-airbnb && npm install eslint-plugin-sort-class-members --save-dev
+  ```
 
-  - [ES5 (Deprecated)](https://github.com/airbnb/javascript/tree/es5-deprecated/es5)
-  - [React](react/)
-  - [CSS-in-JavaScript](css-in-javascript/)
-  - [CSS & Sass](https://github.com/airbnb/css)
-  - [Ruby](https://github.com/airbnb/ruby)
+- In case you have any problem installing, try this manual method:
+  - simply copy [.eslintrc](linters/.eslintrc) to your project root.
+  - install eslint
+    ```bash
+    npm install eslint --save-dev
+    ```
+  - install all required dependencies for airbnb's configuration. [See here](https://github.com/airbnb/javascript/tree/master/packages/eslint-config-airbnb).
+  - install `eslint-plugin-sort-class-members`
+    ```bash
+    npm install eslint-plugin-sort-class-members --save-dev
+    ```
 
 ## Table of Contents
 
@@ -192,10 +208,10 @@ Other Style Guides
     ```
 
   <a name="es6-object-shorthand"></a><a name="3.5"></a>
-  - [3.3](#es6-object-shorthand) Use object method shorthand. eslint: [`object-shorthand`](https://eslint.org/docs/rules/object-shorthand.html)
+  - [3.3](#es6-object-shorthand) Using object method shorthand is acceptable. ~~eslint: [`object-shorthand`](https://eslint.org/docs/rules/object-shorthand.html)~~
 
     ```javascript
-    // bad
+    // okay
     const atom = {
       value: 1,
 
@@ -383,10 +399,10 @@ Other Style Guides
     ```
 
   <a name="arrays--mapping"></a>
-  - [4.5](#arrays--mapping) Use [Array.from](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Array/from) instead of spread `...` for mapping over iterables, because it avoids creating an intermediate array.
+  - [4.5](#arrays--mapping) Using spread `...` for intermediate arrays is acceptable for mapping over iterables.
 
     ```javascript
-    // bad
+    // okay
     const baz = [...foo].map(bar);
 
     // good
@@ -441,7 +457,7 @@ Other Style Guides
     ```
 
   <a name="arrays--bracket-newline"></a>
-  - [4.7](#arrays--bracket-newline) Use line breaks after open and before close array brackets if an array has multiple lines
+  - [4.7](#arrays--bracket-newline) Use line breaks after open and before close array brackets if an array has multiple lines.
 
     ```javascript
     // bad
@@ -1237,6 +1253,27 @@ Other Style Guides
     }
     ```
 
+  <a name="classes--members-order"></a>
+  - [9.7](#classes--members-order) Always use this order for class members
+    1. static properties
+    1. constructor
+    1. methods
+
+    > Why? It's much nicer to have an organized convention so that people know where to look for a specific member of a class. 
+
+    ```javascript
+    class Foo {
+      // static properties
+      static bar = 'bar';
+      // constructor
+      constructor() {
+        /* Some implementation here */
+      }
+      // methods
+      niceCamelCaseMethod() { return 2; }
+    }
+    ```
+
 **[⬆ back to top](#table-of-contents)**
 
 ## Modules
@@ -1439,13 +1476,13 @@ Other Style Guides
     const increasedByOne = numbers.map(num => num + 1);
     ```
 
-  <a name="generators--nope"></a><a name="11.2"></a>
-  - [11.2](#generators--nope) Don’t use generators for now.
+  <a name="generators--yep"></a><a name="11.2"></a>
+  - [11.2](#generators--yep) Generators are fine (when needed).
 
-    > Why? They don’t transpile well to ES5.
+    > Why? It's used in many useful libraries e.g. [redux-saga](https://redux-saga.js.org/)
 
   <a name="generators--spacing"></a>
-  - [11.3](#generators--spacing) If you must use generators, or if you disregard [our advice](#generators--nope), make sure their function signature is spaced properly. eslint: [`generator-star-spacing`](https://eslint.org/docs/rules/generator-star-spacing)
+  - [11.3](#generators--spacing) If you must use generators, or if you agree with [our advice](#generators--yep), make sure their function signature is spaced properly. eslint: [`generator-star-spacing`](https://eslint.org/docs/rules/generator-star-spacing)
 
     > Why? `function` and `*` are part of the same conceptual keyword - `*` is not a modifier for `function`, `function*` is a unique construct, different from `function`.
 
@@ -2654,7 +2691,7 @@ Other Style Guides
     ```
 
   <a name="whitespace--max-len"></a><a name="18.12"></a>
-  - [19.12](#whitespace--max-len) Avoid having lines of code that are longer than 100 characters (including whitespace). Note: per [above](#strings--line-length), long strings are exempt from this rule, and should not be broken up. eslint: [`max-len`](https://eslint.org/docs/rules/max-len.html)
+  - [19.12](#whitespace--max-len) Avoid having lines of code that are longer than ~~100~~ 120 characters (including whitespace). Note: per [above](#strings--line-length), long strings are exempt from this rule, and should not be broken up. eslint: [`max-len`](https://eslint.org/docs/rules/max-len.html)
 
     > Why? This ensures readability and maintainability.
 
